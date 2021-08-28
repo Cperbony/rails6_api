@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  web:
+    container_name: rails6api
+    tty: true
+    stdin_open: true 
+    build: .
+    image: cperbony/rails6api.server.debian
+    restart: unless-stopped
+    command: sh ./scripts/entrypoint.sh
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_NAME=rails6api
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - CORE_BASE=$CORE_ENV
+      - SPROCKETS_CACHE=/cache
+    volumes:
+      - .:/app
+      - cache:/cache
+    ports:
+      - 3000:3000
+      - 3001:3001
+    links:
+      - db
+  db:
+    image: postgres:12-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=rails6api
+      - TZ=America/Sao_Paulo
+    volumes:
+      - rails6api:/var/lib/postgresql/data
+volumes:
+  rails6api:
+  cache:
+  
