@@ -3,12 +3,12 @@ class Api::V1::UsersController < ApplicationController
   
   # GET /users/1
   def show
-    render json: User.find(params[:id])
+      render json: User.find(params[:id])
   end
 
   # POST /users
   def create
-    @user = User.new(user_params)
+      @user = User.new(user_params)
 
     if @user.save
       render json: @user, status: :created
@@ -35,10 +35,11 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def set_user
+    # @type [User]
     @user = User.find(params[:id])
   end
 
   def user_params
-    params.require(:user).permit(:email, :password)
+   params.require(:user).permit(:email, :password)
   end
 end
