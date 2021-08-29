@@ -27,7 +27,7 @@ COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 RUN gem install bundler
 RUN bundle config set --local without 'production'
-RUN bundle check || bundle install
+RUN bundle install
 
 COPY . $INSTALL_PATH
 
